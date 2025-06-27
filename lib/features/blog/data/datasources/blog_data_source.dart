@@ -211,10 +211,9 @@ class BlogDataSourceImpl implements BlogDataSource {
   Future<List<BlogModel>> fetchMyBlogs() async {
     try {
       String url = '${AppSecrets.blogApi}/my-blogs';
-      var response = await http.get(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'},
-      );
+      var response = await http
+          .get(Uri.parse(url), headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'})
+          .timeout(const Duration(seconds: 20));
       var data = jsonDecode(response.body);
       if (data['message'] == 'Success') {
         final blogs = data['data'] as List;
@@ -234,10 +233,9 @@ class BlogDataSourceImpl implements BlogDataSource {
   Future<String> deleteBlog(String blogId) async {
     try {
       String url = '${AppSecrets.blogApi}/$blogId';
-      var response = await http.delete(
-        Uri.parse(url),
-        headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'},
-      );
+      var response = await http
+          .delete(Uri.parse(url), headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'})
+          .timeout(const Duration(seconds: 20));
       var data = jsonDecode(response.body);
       if (data['message'] == 'Success') {
         return 'Success';
