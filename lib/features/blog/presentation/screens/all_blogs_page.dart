@@ -32,13 +32,11 @@ class _AllBlogsPageState extends State<AllBlogsPage> with RouteAware {
     (widget._isMyBlogs)
         ? context.read<BlogBloc>().add(BlogFetchMyBlogs())
         : context.read<BlogBloc>().add(BlogFetchAll());
-    _fetchCategories();
   }
 
-  Future<void> _fetchCategories() async {
-    categories = await CategoryCache.loadCategories();
-    categories.insert(0, 'All');
-    setState(() {});
+  void _fetchCategories() {
+    categories = CategoryCache.loadCategories();
+    (categories[0] != 'All') ? categories.insert(0, 'All') : null;
   }
 
   @override
@@ -61,7 +59,12 @@ class _AllBlogsPageState extends State<AllBlogsPage> with RouteAware {
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: BlocBuilder<BlogBloc, BlogState>(
+          child: BlocConsumer<BlogBloc, BlogState>(
+            listener: (context, state) {
+              if (state is BlogSuccess) {
+                _fetchCategories();
+              }
+            },
             builder: (context, state) {
               if (state is BlogSuccess) {
                 log('Fetched categories: $categories');

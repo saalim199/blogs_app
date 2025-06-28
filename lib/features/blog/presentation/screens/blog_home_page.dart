@@ -57,6 +57,7 @@ class _BlogHomePageState extends State<BlogHomePage> {
         },
       ),
       body: PageView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
 
         itemBuilder: (context, index) {

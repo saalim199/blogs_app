@@ -43,55 +43,61 @@ class _SignupPageState extends State<SignupPage> {
             if (state is AuthLoading) {
               return const Loader();
             }
-            return Form(
-              key: formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text('Sign Up.', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 30),
-                  AuthTextField(controller: nameController, hintText: 'Username'),
-                  const SizedBox(height: 15),
-                  AuthTextField(controller: emailController, hintText: 'Email'),
-                  const SizedBox(height: 15),
-                  AuthTextField(controller: passwordController, hintText: 'Password', obscureText: true),
-                  const SizedBox(height: 15),
-                  AuthTextField(controller: confirmPasswordController, hintText: 'Confirm Password', obscureText: true),
-                  const SizedBox(height: 20),
-                  GradientButton(
-                    buttonText: 'Sign Up',
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        context.read<AuthBloc>().add(
-                          AuthSignUp(
-                            username: nameController.text.trim(),
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                            confirmPassword: confirmPasswordController.text.trim(),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                  const SizedBox(height: 30),
-                  RichText(
-                    text: TextSpan(
-                      text: 'Already have an account? ',
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
-                      children: [
-                        TextSpan(
-                          text: 'Login',
-                          style: const TextStyle(color: Colors.blue, fontSize: 16, fontWeight: FontWeight.bold),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.pushReplacement(context, LoginPage.route());
-                            },
-                        ),
-                      ],
+            return SingleChildScrollView(
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text('Sign Up.', style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 30),
+                    AuthTextField(controller: nameController, hintText: 'Username'),
+                    const SizedBox(height: 15),
+                    AuthTextField(controller: emailController, hintText: 'Email'),
+                    const SizedBox(height: 15),
+                    AuthTextField(controller: passwordController, hintText: 'Password', obscureText: true),
+                    const SizedBox(height: 15),
+                    AuthTextField(
+                      controller: confirmPasswordController,
+                      hintText: 'Confirm Password',
+                      obscureText: true,
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 20),
+                    GradientButton(
+                      buttonText: 'Sign Up',
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          context.read<AuthBloc>().add(
+                            AuthSignUp(
+                              username: nameController.text.trim(),
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              confirmPassword: confirmPasswordController.text.trim(),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Already have an account? ',
+                        style: const TextStyle(color: Colors.white, fontSize: 16),
+                        children: [
+                          TextSpan(
+                            text: 'Login',
+                            style: const TextStyle(color: Colors.blue, fontSize: 16, fontWeight: FontWeight.bold),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.pushReplacement(context, LoginPage.route());
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },

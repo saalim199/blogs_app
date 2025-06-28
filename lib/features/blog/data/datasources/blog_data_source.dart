@@ -122,7 +122,7 @@ class BlogDataSourceImpl implements BlogDataSource {
   @override
   Future<List<String>> fetchAllCategories() async {
     try {
-      List<String> cached = await CategoryCache.loadCategories();
+      List<String> cached = CategoryCache.loadCategories();
       if (cached.isNotEmpty) {
         return cached;
       }
@@ -133,7 +133,7 @@ class BlogDataSourceImpl implements BlogDataSource {
       var data = jsonDecode(reposonse.body);
       if (data['message'] == 'Success') {
         final categories = (data['data'] as List).map((category) => CategoryModel.fromMap(category).name).toList();
-        await CategoryCache.saveCategories(categories);
+        CategoryCache.saveCategories(categories);
         return categories;
       } else {
         throw ServerException(data['message']);

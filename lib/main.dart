@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Blog App',
       theme: AppTheme.darkModeTheme,
       navigatorObservers: [serviceLocator<RouteObserver<ModalRoute<void>>>()],
       home: BlocSelector<AppUserBloc, AppUserState, bool>(

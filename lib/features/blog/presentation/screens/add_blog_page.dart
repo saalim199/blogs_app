@@ -19,7 +19,7 @@ class _AddBlogPageState extends State<AddBlogPage> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  List<String> categories = [];
+  List<String> categories = CategoryCache.loadCategories();
   List<String> selectedCategories = [];
 
   @override
@@ -32,12 +32,6 @@ class _AddBlogPageState extends State<AddBlogPage> {
   @override
   void initState() {
     super.initState();
-    _fetchCategories();
-  }
-
-  Future<void> _fetchCategories() async {
-    categories = await CategoryCache.loadCategories();
-    setState(() {});
   }
 
   @override
